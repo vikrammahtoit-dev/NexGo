@@ -3,7 +3,7 @@ export const navLinks = [
     label: "Solutions",
     href: "/solutions",
     dropdown: [
-      { label: "Shipping", href: "/solutions/shipping" },
+      { label: "Domestic Shipping", href: "/solutions/domestic-shipping" },
     
     ],
   },
