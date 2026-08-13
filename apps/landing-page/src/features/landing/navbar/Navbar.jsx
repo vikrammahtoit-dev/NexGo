@@ -4,6 +4,18 @@ import Logo from "./Logo";
 
 import {
     ChevronDown,
+    Menu,
+    X,
+} from "lucide-react";
+
+import { navbarLinks } from "./navbar.data";
+
+
+/* ============================================================
+   ICON MAP
+============================================================ */
+
+import {
     ShoppingBag,
     Building2,
     Package,
@@ -16,16 +28,8 @@ import {
     BookMarked,
     CircleHelp,
     Code,
-    Menu,
-    X,
 } from "lucide-react";
 
-import { navbarLinks } from "./navbar.data";
-
-
-/* ============================================================
-   ICON MAP
-============================================================ */
 
 const iconMap = {
     ShoppingBag,
@@ -48,7 +52,6 @@ const iconMap = {
 ============================================================ */
 
 const Navbar = () => {
-
     const [activeMenu, setActiveMenu] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -74,20 +77,7 @@ const Navbar = () => {
 
 
     /* ========================================================
-       GET SECTIONS
-       
-       Supports both:
-       
-       menu: {
-           sections: [...]
-       }
-
-       AND old structure:
-       
-       menu: {
-           title: "...",
-           items: [...]
-       }
+       GET MENU SECTIONS
     ======================================================== */
 
     const getMenuSections = (menu) => {
@@ -95,10 +85,12 @@ const Navbar = () => {
             return [];
         }
 
+        // New structure
         if (Array.isArray(menu.sections)) {
             return menu.sections.slice(0, 2);
         }
 
+        // Backward compatibility with old structure
         if (menu.title && Array.isArray(menu.items)) {
             return [
                 {
@@ -113,7 +105,7 @@ const Navbar = () => {
 
 
     /* ========================================================
-       FIND ACTIVE DROPDOWN
+       ACTIVE MENU DATA
     ======================================================== */
 
     const activeLink = navbarLinks.find(
@@ -127,22 +119,16 @@ const Navbar = () => {
 
     /* ========================================================
        DROPDOWN WIDTH
-       
-       1 section  -> compact
-       2 sections -> wider mega menu
     ======================================================== */
 
     const dropdownWidth =
         activeSections.length === 1
-            ? "w-[460px]"
-            : "w-[860px]";
+            ? "w-[460px] max-w-[calc(100vw-48px)]"
+            : "w-[860px] max-w-[calc(100vw-48px)]";
 
 
     /* ========================================================
-       GRID COLUMNS
-       
-       1 section  -> 1 column
-       2 sections -> 2 columns
+       DROPDOWN GRID
     ======================================================== */
 
     const dropdownGrid =
@@ -160,7 +146,8 @@ const Navbar = () => {
                 w-full
                 border-b
                 border-slate-100
-                bg-white
+                bg-white/95
+                backdrop-blur-md
             "
             onMouseLeave={handleMenuClose}
         >
@@ -170,13 +157,15 @@ const Navbar = () => {
                     relative
                     mx-auto
                     flex
-                    h-[76px]
-                    w-[calc(100%-32px)]
+                    h-[72px]
+                    w-[calc(100%-24px)]
                     max-w-[1280px]
                     items-center
                     justify-between
-                    sm:w-[calc(100%-48px)]
-                    lg:w-[calc(100%-80px)]
+                    sm:w-[calc(100%-40px)]
+                    lg:w-[calc(100%-56px)]
+                    xl:h-[76px]
+                    xl:w-[calc(100%-80px)]
                 "
             >
 
@@ -189,15 +178,18 @@ const Navbar = () => {
 
                 {/* =====================================================
                     DESKTOP NAVIGATION
+
+                    ONLY SHOWS FROM xl (1280px)
                 ====================================================== */}
 
                 <nav
                     className="
                         hidden
+                        h-full
                         items-center
-                        gap-6
-                        lg:flex
-                        xl:gap-8
+                        gap-5
+                        xl:flex
+                        2xl:gap-7
                     "
                 >
 
@@ -212,12 +204,15 @@ const Navbar = () => {
                         ================================================= */
 
                         if (!link.dropdown) {
-
                             return (
                                 <Link
                                     key={link.label}
                                     to={link.path}
                                     className="
+                                        relative
+                                        flex
+                                        h-full
+                                        items-center
                                         whitespace-nowrap
                                         text-[13px]
                                         font-medium
@@ -225,7 +220,7 @@ const Navbar = () => {
                                         transition-colors
                                         duration-200
                                         hover:text-[#ff6414]
-                                        xl:text-[14px]
+                                        2xl:text-[14px]
                                     "
                                 >
                                     {link.label}
@@ -235,13 +230,13 @@ const Navbar = () => {
 
 
                         /* ================================================
-                           DROPDOWN BUTTON
+                           DROPDOWN
                         ================================================= */
 
                         return (
                             <div
                                 key={link.label}
-                                className="relative"
+                                className="relative h-full"
                                 onMouseEnter={() =>
                                     setActiveMenu(link.label)
                                 }
@@ -253,8 +248,8 @@ const Navbar = () => {
                                         handleMenuToggle(link.label)
                                     }
                                     className={`
-                                        group
-                                        inline-flex
+                                        flex
+                                        h-full
                                         items-center
                                         gap-1.5
                                         whitespace-nowrap
@@ -262,7 +257,7 @@ const Navbar = () => {
                                         font-medium
                                         transition-colors
                                         duration-200
-                                        xl:text-[14px]
+                                        2xl:text-[14px]
 
                                         ${isActive
                                             ? "text-[#ff6414]"
@@ -275,7 +270,6 @@ const Navbar = () => {
                                     <span>
                                         {link.label}
                                     </span>
-
 
                                     <ChevronDown
                                         size={14}
@@ -301,18 +295,94 @@ const Navbar = () => {
 
 
                 {/* =====================================================
-                    CTA BUTTONS
+                    TABLET ACTIONS
+
+                    Visible from md to xl
                 ====================================================== */}
 
                 <div
                     className="
-                        ml-6
+                        ml-auto
+                        hidden
+                        items-center
+                        gap-2
+                        md:flex
+                        xl:hidden
+                    "
+                >
+
+                    <Link
+                        to="/login"
+                        className="
+                            flex
+                            h-10
+                            items-center
+                            justify-center
+                            rounded-lg
+                            border
+                            border-[#cbd4e2]
+                            px-4
+                            text-xs
+                            font-semibold
+                            text-[#172b50]
+                            transition-colors
+                            duration-200
+                            hover:border-[#ff6414]
+                            hover:text-[#ff6414]
+                            lg:px-5
+                            lg:text-[13px]
+                        "
+                    >
+                        Login
+                    </Link>
+
+
+                    <Link
+                        to="/get-started"
+                        className="
+                            flex
+                            h-10
+                            items-center
+                            justify-center
+                            rounded-lg
+                            bg-[#ff6414]
+                            px-4
+                            text-xs
+                            font-semibold
+                            text-white
+                            shadow-[0_4px_12px_rgba(255,100,20,0.12)]
+                            transition-all
+                            duration-200
+                            hover:bg-[#ed590e]
+                            lg:px-5
+                            lg:text-[13px]
+                        "
+                    >
+                        Get Started
+                    </Link>
+
+                </div>
+
+
+                {/* =====================================================
+                    DESKTOP CTA
+
+                    Only visible from xl
+                ====================================================== */}
+
+                <div
+                    className="
+                        ml-5
                         hidden
                         shrink-0
                         items-center
                         gap-3
-                        lg:flex
-                        xl:ml-10
+                        border-l
+                        border-slate-200
+                        pl-5
+                        xl:flex
+                        2xl:ml-8
+                        2xl:pl-7
                     "
                 >
 
@@ -336,9 +406,9 @@ const Navbar = () => {
                             hover:-translate-y-px
                             hover:border-[#ff6414]
                             hover:text-[#ff6414]
-                            xl:h-[44px]
-                            xl:px-[23px]
-                            xl:text-[14px]
+                            2xl:h-[44px]
+                            2xl:px-[23px]
+                            2xl:text-[14px]
                         "
                     >
                         Login
@@ -368,10 +438,10 @@ const Navbar = () => {
                             hover:border-[#ed590e]
                             hover:bg-[#ed590e]
                             hover:shadow-[0_7px_18px_rgba(255,100,20,0.2)]
-                            xl:h-[44px]
-                            xl:min-w-[116px]
-                            xl:px-[23px]
-                            xl:text-[14px]
+                            2xl:h-[44px]
+                            2xl:min-w-[116px]
+                            2xl:px-[23px]
+                            2xl:text-[14px]
                         "
                     >
                         Get Started
@@ -381,7 +451,9 @@ const Navbar = () => {
 
 
                 {/* =====================================================
-                    MOBILE MENU BUTTON
+                    MOBILE / TABLET MENU BUTTON
+
+                    Visible below xl
                 ====================================================== */}
 
                 <button
@@ -397,10 +469,11 @@ const Navbar = () => {
                             : "Open navigation menu"
                     }
                     className="
-                        ml-auto
+                        ml-3
                         flex
                         h-10
                         w-10
+                        shrink-0
                         items-center
                         justify-center
                         rounded-lg
@@ -411,7 +484,7 @@ const Navbar = () => {
                         duration-200
                         hover:border-[#ff6414]
                         hover:text-[#ff6414]
-                        lg:hidden
+                        xl:hidden
                     "
                 >
                     {mobileMenuOpen ? (
@@ -424,6 +497,9 @@ const Navbar = () => {
 
                 {/* =====================================================
                     DESKTOP DYNAMIC MEGA MENU
+
+                    Only exists on xl+ because desktop nav starts
+                    at xl.
                 ====================================================== */}
 
                 {activeMenu && activeLink?.menu && (
@@ -431,7 +507,7 @@ const Navbar = () => {
                         className={`
                             absolute
                             left-1/2
-                            top-[76px]
+                            top-[72px]
                             hidden
                             -translate-x-1/2
                             overflow-hidden
@@ -441,19 +517,16 @@ const Navbar = () => {
                             border-slate-100
                             bg-white
                             shadow-[0_18px_45px_rgba(20,38,70,0.12)]
-                            lg:block
+                            xl:block
                             ${dropdownWidth}
+                            xl:top-[76px]
                         `}
                         onMouseEnter={() =>
                             setActiveMenu(activeMenu)
                         }
                     >
 
-                        <div className="p-7 xl:p-8">
-
-                            {/* =================================================
-                                DYNAMIC SECTIONS
-                            ================================================== */}
+                        <div className="p-6 2xl:p-8">
 
                             <div
                                 className={`
@@ -473,7 +546,7 @@ const Navbar = () => {
 
                                             {/* SECTION TITLE */}
 
-                                            <div className="mb-5">
+                                            <div className="mb-4">
 
                                                 <p
                                                     className="
@@ -491,7 +564,7 @@ const Navbar = () => {
 
                                             {/* SECTION ITEMS */}
 
-                                            <div className="space-y-2">
+                                            <div className="space-y-1">
 
                                                 {section.items.map(
                                                     (item) => {
@@ -516,12 +589,14 @@ const Navbar = () => {
                                                                     group
                                                                     flex
                                                                     items-start
-                                                                    gap-4
+                                                                    gap-3
                                                                     rounded-xl
-                                                                    p-4
+                                                                    p-3
                                                                     transition-colors
                                                                     duration-200
                                                                     hover:bg-slate-50
+                                                                    2xl:gap-4
+                                                                    2xl:p-4
                                                                 "
                                                             >
 
@@ -530,8 +605,8 @@ const Navbar = () => {
                                                                 <div
                                                                     className="
                                                                         flex
-                                                                        h-10
-                                                                        w-10
+                                                                        h-9
+                                                                        w-9
                                                                         shrink-0
                                                                         items-center
                                                                         justify-center
@@ -542,12 +617,14 @@ const Navbar = () => {
                                                                         duration-200
                                                                         group-hover:bg-[#ff6414]
                                                                         group-hover:text-white
+                                                                        2xl:h-10
+                                                                        2xl:w-10
                                                                     "
                                                                 >
                                                                     {Icon && (
                                                                         <Icon
                                                                             size={
-                                                                                19
+                                                                                18
                                                                             }
                                                                             strokeWidth={
                                                                                 1.8
@@ -563,12 +640,13 @@ const Navbar = () => {
 
                                                                     <p
                                                                         className="
-                                                                            text-[14px]
+                                                                            text-[13px]
                                                                             font-semibold
                                                                             text-[#172b50]
                                                                             transition-colors
                                                                             duration-200
                                                                             group-hover:text-[#ff6414]
+                                                                            2xl:text-[14px]
                                                                         "
                                                                     >
                                                                         {
@@ -580,9 +658,10 @@ const Navbar = () => {
                                                                     <p
                                                                         className="
                                                                             mt-1
-                                                                            text-[12px]
+                                                                            text-[11px]
                                                                             leading-5
                                                                             text-slate-500
+                                                                            2xl:text-[12px]
                                                                         "
                                                                     >
                                                                         {
@@ -612,7 +691,9 @@ const Navbar = () => {
 
 
                 {/* =====================================================
-                    MOBILE MENU
+                    MOBILE / TABLET MENU
+
+                    Below xl
                 ====================================================== */}
 
                 {mobileMenuOpen && (
@@ -621,20 +702,23 @@ const Navbar = () => {
                             absolute
                             left-0
                             right-0
-                            top-[76px]
+                            top-[72px]
                             border-t
                             border-slate-100
                             bg-white
                             shadow-[0_18px_35px_rgba(20,38,70,0.1)]
-                            lg:hidden
+                            xl:hidden
+                            xl:top-[76px]
                         "
                     >
 
                         <div
                             className="
-                                max-h-[calc(100vh-76px)]
+                                max-h-[calc(100vh-72px)]
                                 overflow-y-auto
-                                p-5
+                                p-4
+                                sm:p-5
+                                lg:p-6
                             "
                         >
 
@@ -649,9 +733,9 @@ const Navbar = () => {
                                     "
                                 >
 
-                                    {/* ========================================
-                                        DROPDOWN LINK
-                                    ========================================= */}
+                                    {/* ====================================
+                                        DROPDOWN
+                                    ===================================== */}
 
                                     {link.dropdown ? (
 
@@ -669,9 +753,10 @@ const Navbar = () => {
                                                 justify-between
                                                 py-4
                                                 text-left
-                                                text-[15px]
+                                                text-sm
                                                 font-medium
                                                 text-[#253657]
+                                                sm:text-[15px]
                                             "
                                         >
 
@@ -698,9 +783,9 @@ const Navbar = () => {
 
                                     ) : (
 
-                                        /* ====================================
-                                           NORMAL MOBILE LINK
-                                        ===================================== */
+                                        /* =================================
+                                           NORMAL LINK
+                                        ================================== */
 
                                         <Link
                                             to={link.path}
@@ -708,14 +793,17 @@ const Navbar = () => {
                                                 setMobileMenuOpen(
                                                     false
                                                 );
-                                                setActiveMenu(null);
+                                                setActiveMenu(
+                                                    null
+                                                );
                                             }}
                                             className="
                                                 block
                                                 py-4
-                                                text-[15px]
+                                                text-sm
                                                 font-medium
                                                 text-[#253657]
+                                                sm:text-[15px]
                                             "
                                         >
                                             {link.label}
@@ -724,9 +812,9 @@ const Navbar = () => {
                                     )}
 
 
-                                    {/* ========================================
-                                        MOBILE DROPDOWN
-                                    ========================================= */}
+                                    {/* ====================================
+                                        MOBILE DROPDOWN CONTENT
+                                    ===================================== */}
 
                                     {link.dropdown &&
                                         activeMenu ===
@@ -838,7 +926,7 @@ const Navbar = () => {
 
                                                                                     {/* CONTENT */}
 
-                                                                                    <div>
+                                                                                    <div className="min-w-0">
 
                                                                                         <p
                                                                                             className="
@@ -857,6 +945,7 @@ const Navbar = () => {
                                                                                             className="
                                                                                                 mt-0.5
                                                                                                 text-[11px]
+                                                                                                leading-4
                                                                                                 text-slate-500
                                                                                             "
                                                                                         >
@@ -889,17 +978,19 @@ const Navbar = () => {
 
 
                             {/* =================================================
-                                MOBILE ACTIONS
+                                MOBILE / TABLET ACTIONS
                             ================================================== */}
 
                             <div
                                 className="
                                     mt-5
-                                    flex
+                                    grid
+                                    grid-cols-1
                                     gap-3
                                     border-t
                                     border-slate-100
                                     pt-5
+                                    sm:grid-cols-2
                                 "
                             >
 
@@ -911,7 +1002,6 @@ const Navbar = () => {
                                     className="
                                         flex
                                         h-11
-                                        flex-1
                                         items-center
                                         justify-center
                                         rounded-lg
@@ -934,7 +1024,6 @@ const Navbar = () => {
                                     className="
                                         flex
                                         h-11
-                                        flex-1
                                         items-center
                                         justify-center
                                         rounded-lg
