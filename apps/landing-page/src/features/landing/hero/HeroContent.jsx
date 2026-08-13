@@ -40,7 +40,7 @@ const HeroContent = () => {
             {/* Description */}
 
             <p className="mt-5 max-w-[520px] text-[13px] leading-6 text-[#596b8c] sm:text-[15px] sm:leading-7">
-                Connect with 50+ courier partners, compare real-time rates,
+                Connect with 15+ courier partners, compare real-time rates,
                 ship, track and manage everything from a single intelligent
                 platform.
             </p>
