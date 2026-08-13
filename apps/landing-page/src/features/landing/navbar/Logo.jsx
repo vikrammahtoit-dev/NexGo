@@ -1,14 +1,35 @@
 import { Link } from "react-router-dom";
-import logo from "../../../assets/logos/Nexgo_logo.png";
+import nexgoLogo from "../../../assets/logos/Nexgo_logo.png";
 
-export default function Logo() {
+const Logo = () => {
     return (
-        <Link to="/" className="flex shrink-0 items-center" >
+        <Link
+            to="/"
+            className="
+                flex
+                h-10
+                w-[130px]
+                shrink-0
+                items-center
+                overflow-hidden
+                sm:h-11
+                sm:w-[145px]
+                lg:w-[160px]
+            "
+        >
             <img
-                src={logo}
+                src={nexgoLogo}
                 alt="Nexgo"
-                className="block h-auto w-120px sm:w-[130px] lg:w-[138px]"
+                className="
+                    block
+                    h-auto
+                    w-full
+                    max-w-full
+                    object-contain
+                "
             />
         </Link>
-    )
-}
+    );
+};
+
+export default Logo;
