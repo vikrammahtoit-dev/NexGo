@@ -305,7 +305,7 @@ const LiveTracking = () => {
     const stats = [
         {
             value: "10K+",
-            title: "Packages Delivered",
+            title: "Packages Delivered Everyday",
             subtitle: "Safe & Secure delivery",
             icon: PackageIcon,
         },
