@@ -172,11 +172,11 @@ const testimonials = [
     {
         quote:
             "Nexgo has completely simplified our logistics operations. One platform for multiple couriers, real-time tracking, and powerful automation — it saves us hours every day.",
-        name: "Arjun Mehta",
-        role: "Operations Head",
-        company: "StyleMyWay",
+        name: "Vikram Kumar",
+
+
         rating: "4.8",
-        initials: "AM",
+        initials: "",
         avatarVariant: "blue",
         icon: ShoppingBagIcon,
         accent: "text-[#2563EB]",
@@ -184,11 +184,11 @@ const testimonials = [
     {
         quote:
             "With Nexgo, we can compare rates, choose the best delivery options, and keep our customers informed at every step. Our NPS score has improved significantly.",
-        name: "Priyanka Nair",
-        role: "Co-founder",
-        company: "HealthyBites",
+        name: "Ajit Kumar",
+
+
         rating: "4.9",
-        initials: "PN",
+        initials: " ",
         avatarVariant: "orange",
         icon: StoreIcon,
         accent: "text-[#FF6900]",
@@ -196,11 +196,11 @@ const testimonials = [
     {
         quote:
             "The integrations, dashboard, and analytics give us full control over our distribution network. Nexgo is truly a technology partner we can rely on for scale.",
-        name: "Rohit Verma",
-        role: "Supply Chain Manager",
-        company: "UrbanKart",
+        name: "Abhishek Raj",
+
+
         rating: "5.0",
-        initials: "RV",
+        initials: "",
         avatarVariant: "purple",
         icon: BuildingIcon,
         accent: "text-[#6D4BC7]",

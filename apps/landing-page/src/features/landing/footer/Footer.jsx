@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom";
 import nexgoLogo from "../../../assets/logos/CompanyName.png";
 
 /* ============================================================
@@ -486,26 +487,35 @@ const Footer = () => {
                         "
                     >
 
-                        <a
-                            href="#"
+                        <Link to="/privacy-policy"
                             className="transition hover:text-white"
                         >
                             Privacy Policy
-                        </a>
+                        </Link>
 
-                        <a
-                            href="#"
+
+
+                        <Link
+                            to="/terms-services"
                             className="transition hover:text-white"
                         >
                             Terms of Service
-                        </a>
+                        </Link>
 
-                        <a
-                            href="#"
+                        <Link
+                            to="/cookie-policy"
                             className="transition hover:text-white"
                         >
-                            Refund Policy
-                        </a>
+                            Cookie Policy
+                        </Link>
+
+
+                        <Link
+                            to="/refund-policy"
+                            className="transition hover:text-white"
+                        >
+                            Refund & Cancellation Policy
+                        </Link>
 
                     </div>
 
