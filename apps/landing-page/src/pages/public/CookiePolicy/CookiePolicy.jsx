@@ -24,6 +24,8 @@ import {
 
 import CookiePolicyHero from "./CookiePolicyHero";
 import { cookiePolicyData as data } from "./CookiePolicy.data";
+import Navbar from "../../../features/landing/navbar/Navbar";
+import Footer from "../../../features/landing/footer/Footer";
 
 /* ============================================================
    ICON MAP
@@ -411,6 +413,7 @@ const CookieSettings = () => {
 export default function CookiePolicy() {
     return (
         <main className="min-h-screen bg-white text-[#10194a]">
+            <Navbar />
 
             {/* ======================================================
           HERO
@@ -1032,6 +1035,8 @@ export default function CookiePolicy() {
 
                 </div>
             </div>
+
+            <Footer />
         </main>
     );
 }
