@@ -364,7 +364,7 @@ const Footer = () => {
                             </FooterLink>
 
                             <FooterLink>
-                                <Link to="faqs">
+                                <Link to="/faqs">
                                     FAQs
                                 </Link>
 
