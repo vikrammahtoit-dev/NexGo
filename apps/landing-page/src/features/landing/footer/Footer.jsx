@@ -339,23 +339,35 @@ const Footer = () => {
                         <div className="mt-5 flex flex-col gap-3">
 
                             <FooterLink>
-                                Blog
+                                <Link
+                                    to="/api-guides">
+                                    API Docs
+                                </Link>
                             </FooterLink>
+
+                            {/* <FooterLink>
+                                Blog
+                            </FooterLink> */}
 
                             <FooterLink>
                                 Help Center
                             </FooterLink>
 
                             <FooterLink>
-                                API Docs
+                                <Link to="/shipping-guides">
+                                    Shipping Guide
+                                </Link>
                             </FooterLink>
 
                             <FooterLink>
-                                Shipping Guide
+                                Shipping SOP
                             </FooterLink>
 
                             <FooterLink>
-                                FAQs
+                                <Link to="faqs">
+                                    FAQs
+                                </Link>
+
                             </FooterLink>
 
                         </div>
